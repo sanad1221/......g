@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ورشة المطاط — مرونات الطلب والعرض</title>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5ff;--fg:#14213d;--card:#fff;--mut:#5b6784;--pink:#e8236b;--teal:#008f86;--yel:#ffc93c;--line:#d5dcf2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1226;--fg:#eef1ff;--card:#181e3b;--mut:#a3aed4;--pink:#ff5c93;--teal:#2fd3c6;--line:#2c3562}}
+:root[data-theme="dark"]{--bg:#0e1226;--fg:#eef1ff;--card:#181e3b;--mut:#a3aed4;--pink:#ff5c93;--teal:#2fd3c6;--line:#2c3562}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Tajawal,"Segoe UI",Tahoma,sans-serif;line-height:1.8;font-size:17px}
+h1,h2,h3{font-family:Lalezar,Tajawal,sans-serif;font-weight:400;margin:0;line-height:1.3}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;display:flex;gap:6px;overflow-x:auto;padding:8px 12px;border-bottom:2px solid var(--line)}
+nav a{white-space:nowrap;color:var(--fg);text-decoration:none;padding:4px 14px;border-radius:20px;background:var(--card);border:1px solid var(--line);font-size:15px}
+nav a:hover{background:var(--yel);color:#14213d}
+section{max-width:900px;margin:0 auto;padding:44px 16px}
+h2{font-size:34px;margin-bottom:6px}
+.sub{color:var(--mut);margin:0 0 20px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:18px;margin:14px 0}
+button,select,input{font:inherit;color:inherit}
+.btn{background:var(--pink);color:#fff;border:0;border-radius:14px;padding:8px 18px;cursor:pointer}
+.btn.alt{background:var(--card);color:var(--fg);border:2px solid var(--line)}
+.btn.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+/* hero */
+.hero{text-align:center;padding-top:30px}
+.hero h1{font-size:clamp(64px,18vw,140px);color:var(--pink);display:inline-block;transform-origin:center;transition:transform .15s}
+.hero p{max-width:560px;margin:0 auto 10px}
+.bar{height:26px;background:var(--line);border-radius:14px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:var(--teal);transition:width .2s}
+.row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+input[type=range]{width:100%;accent-color:var(--pink)}
+.big{font-family:Lalezar;font-size:30px;color:var(--teal)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+svg{max-width:100%;height:auto}
+.ax{stroke:var(--mut);stroke-width:1.5;fill:none}
+.cv{stroke:var(--pink);stroke-width:3.5;fill:none}
+.t{fill:var(--fg);font:13px Tajawal,sans-serif}
+.chip{display:inline-block;padding:2px 12px;border-radius:12px;background:var(--yel);color:#14213d;font-size:14px}
+.det{cursor:pointer;text-align:right;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px;width:100%}
+.det b{font-family:Lalezar;font-weight:400;font-size:20px}
+.det span{display:block;max-height:0;overflow:hidden;transition:max-height .3s;color:var(--mut);font-size:15px}
+.det.open span{max-height:120px}
+.det.open{border-color:var(--teal)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td,th{border:1px solid var(--line);padding:6px;text-align:center}
+th{background:var(--yel);color:#14213d}
+.flip{perspective:700px;height:150px;cursor:pointer;background:none;border:0;padding:0}
+.flip div{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.f div{transform:rotateY(180deg)}
+.flip p{position:absolute;inset:0;margin:0;padding:12px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;backface-visibility:hidden;font-size:15px;line-height:1.5}
+.flip .q{background:var(--card);border:2px solid var(--line);color:var(--fg)}
+.flip .a{background:var(--teal);color:#fff;transform:rotateY(180deg);font-weight:700}
+.opt{display:block;width:100%;text-align:right;margin:8px 0;padding:10px 14px;border-radius:14px;border:2px solid var(--line);background:var(--card);cursor:pointer}
+.opt.ok{background:var(--teal);color:#fff;border-color:var(--teal)}
+.opt.no{background:var(--pink);color:#fff;border-color:var(--pink)}
+.ex{color:var(--mut);margin-top:8px}
+input[type=number],select{background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:6px 8px;width:100%}
+label{font-size:14px;color:var(--mut)}
+footer{text-align:center;color:var(--mut);padding:30px 16px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav>
+<a href="#hero">الورشة</a><a href="#lab">المعمل</a><a href="#types">درجات المرونة</a><a href="#why">إيه اللي بيشدّ؟</a><a href="#rev">الإيراد</a><a href="#other">دخلية وتقاطعية</a><a href="#supply">العرض</a><a href="#calc">آلة الحساب</a><a href="#cards">بطاقات</a><a href="#quiz">اختبر نفسك</a>
+</nav>
+
+<section class="hero" id="hero">
+<p class="sub">فصل ٦ — مرونات الطلب والعرض</p>
+<h1 id="word">مرونة</h1>
+<p>المرونة ببساطة: <b>السعر شدّ في المطاطة… الكمية اتمطّت قد إيه؟</b> جرّب بنفسك واختار شخصية السلعة.</p>
+<div class="row" id="who"></div>
+<div class="card">
+<label>اشدّ السعر: <b id="hp">+20%</b></label>
+<input type="range" id="hs" min="5" max="50" value="20" aria-label="نسبة زيادة السعر">
+<label>الكمية المطلوبة بعد الشدّ: <b id="hq"></b></label>
+<div class="bar"><i id="hb"></i></div>
+<div id="hmsg" class="ex"></div>
+</div>
+</section>
+
+<section id="lab">
+<h2>المعمل: خط الطلب المستقيم</h2>
+<p class="sub">المرونة بتتغير من نقطة لنقطة على نفس الخط. حرّك السعر (الطلب: ك = ١٠٠ − ١٠ث).</p>
+<div class="card">
+<svg viewBox="0 0 320 230" role="img" aria-label="منحنى طلب خطي">
+<path class="ax" d="M30 20V190H300"/><text class="t" x="8" y="18">ث</text><text class="t" x="302" y="205">ك</text>
+<line class="cv" x1="30" y1="30" x2="270" y2="190"/>
+<line id="lx" stroke="var(--teal)" stroke-dasharray="4" x1="0" y1="0" x2="0" y2="0"/>
+<line id="ly" stroke="var(--teal)" stroke-dasharray="4" x1="0" y1="0" x2="0" y2="0"/>
+<circle id="pt" r="8" fill="var(--yel)" stroke="var(--fg)" stroke-width="2"/>
+<text class="t" x="34" y="26">م ط ث = ∞</text><text class="t" x="200" y="186">م ط ث = صفر</text>
+</svg>
+<label>السعر ث = <b id="lp"></b></label>
+<input type="range" id="ls" min="0.5" max="9.5" step="0.5" value="8" aria-label="السعر">
+<div class="grid"><div>المرونة: <span class="big" id="le"></span></div><div>الطلب: <span class="chip" id="lt"></span></div><div>الإيراد الكلي: <span class="big" id="lr"></span></div></div>
+<p class="ex" id="ln"></p>
+</div>
+<p class="sub">لاحظ: الإيراد بيوصل لأعلى قيمة عند م ط ث = ١ (في المنتصف).</p>
+</section>
+
+<section id="types">
+<h2>الدرجات الخمس للطلب</h2>
+<p class="sub">كل درجة ليها شخصية. اضغط عليها.</p>
+<div class="row" id="tt"></div>
+<div class="card grid" style="align-items:center"><svg viewBox="0 0 200 160" id="tsv" role="img" aria-label="شكل المنحنى"></svg><div id="ttx"></div></div>
+</section>
+
+<section id="why">
+<h2>إيه اللي بيخلّي الطلب مرن؟</h2>
+<p class="sub">اضغط كل كارت.</p>
+<div class="grid" id="dets"></div>
+</section>
+
+<section id="rev">
+<h2>السعر والإيراد الكلي</h2>
+<p class="sub">الإيراد الكلي = الإنفاق الكلي = الكمية × السعر. اختار المرونة واتجاه السعر.</p>
+<div class="card">
+<div class="row" id="rm"></div>
+<div class="row"><button class="btn alt" data-d="1">السعر ↑ يرتفع</button><button class="btn alt" data-d="-1">السعر ↓ ينخفض</button></div>
+<div class="big" id="rres" style="text-align:center">اختار حاجة</div>
+<p class="ex" id="rwhy" style="text-align:center"></p>
+</div>
+<table><tr><th>المرونة</th><th>السعر</th><th>الإيراد</th></tr>
+<tr><td>= صفر</td><td>↑</td><td>↑ بنفس النسبة</td></tr><tr><td>&lt; ١ (غير مرن)</td><td>↑</td><td>↑</td></tr><tr><td>= ١</td><td>↑↓</td><td>ثابت</td></tr><tr><td>&gt; ١ (مرن)</td><td>↑</td><td>↓</td></tr><tr><td>= ∞</td><td>↑</td><td>↓ بقدر لانهائي</td></tr></table>
+</section>
+
+<section id="other">
+<h2>المرونة الدخلية والتقاطعية</h2>
+<div class="grid">
+<div class="card"><h3>الدخلية (م ط ل)</h3><p class="sub">%Δ الطلب ÷ %Δ الدخل</p>
+<div class="row"><button class="btn alt" data-i="2.5">+٢٫٥</button><button class="btn alt" data-i="0.5">+٠٫٥</button><button class="btn alt" data-i="-1">−١</button><button class="btn alt" data-i="0">صفر</button></div><div id="ires" class="ex"></div></div>
+<div class="card"><h3>التقاطعية (م ط ق)</h3><p class="sub">%Δ الطلب على (س) ÷ %Δ سعر (ص)</p>
+<div class="row"><button class="btn alt" data-c="1">+</button><button class="btn alt" data-c="-1">−</button><button class="btn alt" data-c="0">صفر</button></div><div id="cres" class="ex"></div></div></div>
+<p class="sub">حيلة الحفظ: التقاطعية الموجبة = بدائل (شاي/قهوة). السالبة = مكملات (سيارة/بنزين).</p>
+</section>
+
+<section id="supply">
+<h2>مرونة العرض</h2>
+<p class="sub">أي منحنى عرض خطي: لو بيخرج من محور الكمية يمين نقطة الأصل = غير مرن، يسارها = مرن، من نقطة الأصل = متكافئ (١).</p>
+<div class="row" id="st"></div>
+<div class="card grid" style="align-items:center"><svg viewBox="0 0 200 160" id="ssv" role="img" aria-label="منحنى عرض"></svg><div id="stx"></div></div>
+<div class="grid"><div class="card"><h3>محددات مرونة العرض</h3>مرونة عرض عناصر الإنتاج (طردية) • قابلية التخزين (طردية) • السلع الصناعية مرنة والزراعية غير مرنة • الفترة الطويلة مرنة، القصيرة غير مرنة.</div></div>
+</section>
+
+<section id="calc">
+<h2>آلة الحساب</h2>
+<p class="sub">المعادلة الثانية في المحاضرة: م = (Δك ÷ Δث) × (ث١ ÷ ك١)</p>
+<div class="card">
+<select id="cm" aria-label="النوع"><option value="p">مرونة الطلب السعرية</option><option value="i">مرونة الطلب الدخلية</option><option value="c">مرونة الطلب التقاطعية</option><option value="s">مرونة العرض السعرية</option></select>
+<div class="grid" style="margin-top:8px">
+<div><label>القيمة الأولى (سعر/دخل) </label><input type="number" id="a1" value="10"></div><div><label>القيمة الجديدة</label><input type="number" id="a2" value="15"></div>
+<div><label>الكمية الأولى</label><input type="number" id="b1" value="200"></div><div><label>الكمية الجديدة</label><input type="number" id="b2" value="150"></div></div>
+<div class="row"><button class="btn" id="cb">احسب</button></div>
+<div class="big" id="cr" style="text-align:center"></div><p class="ex" id="cx" style="text-align:center"></p>
+</div>
+</section>
+
+<section id="cards">
+<h2>بطاقات سريعة</h2>
+<p class="sub">اضغط البطاقة تقلب. من أسئلة الملف: «اذكر دون شرح» والمصطلحات.</p>
+<div class="grid" id="fl"></div>
+</section>
+
+<section id="quiz">
+<h2>اختبر نفسك</h2>
+<p class="sub">أسئلة على كل أفكار المحاضرة + أسئلة الملف.</p>
+<div class="card" id="qb"></div>
+</section>
+<footer>شاطر؟ ارجع للأول وغيّر الشخصية وشوف الفرق ✨</footer>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const f=(n,d=2)=>(Math.round(n*10**d)/10**d).toString();
+const kind=e=>{e=Math.abs(e);return e===0?'عديم المرونة':e<1?'غير مرن (قليل المرونة)':e===1?'متكافئ المرونة':e===Infinity?'لانهائي المرونة':'مرن (كبير المرونة)'};
+/* hero */
+const who=[['💊 دواء',0.2],['🍵 شاي',1],['🏖️ رحلة سياحية',3]];let he=1;
+who.forEach(([n,e],i)=>{const b=document.createElement('button');b.className='btn alt'+(i==1?' on':'');b.textContent=n;b.onclick=()=>{he=e;$$('#who button').forEach(x=>x.classList.remove('on'));b.classList.add('on');hero()};$('#who').append(b)});
+function hero(){const p=+$('#hs').value,q=Math.min(100,p*he);$('#hp').textContent='+'+p+'%';$('#hq').textContent='−'+f(q,1)+'%';$('#hb').style.width=(100-q)+'%';
+$('#word').style.transform='scaleX('+(1+p/60)+') scaleY('+(1-Math.min(q,60)/200)+')';
+$('#hmsg').textContent='م ط ث = '+he+' ← '+(he<1?'الناس بتشتريه غصب عنها، الطلب بالكاد اتحرك.':he==1?'الكمية اتغيرت بنفس نسبة السعر.':'الناس هربت! الكمية اتمطت أكتر من السعر.')}
+$('#hs').oninput=hero;hero();
+/* lab */
+function lab(){const P=+$('#ls').value,Q=100-10*P,x=30+Q*2.4,y=190-(P/10)*160,e=P/(10-P),r=P*Q;
+$('#pt').setAttribute('cx',x);$('#pt').setAttribute('cy',y);
+for(const [id,a,b,c,d] of [['lx',30,y,x,y],['ly',x,y,x,190]]){const l=$('#'+id);l.setAttribute('x1',a);l.setAttribute('y1',b);l.setAttribute('x2',c);l.setAttribute('y2',d)}
+$('#lp').textContent=P;$('#le').textContent=f(e);$('#lt').textContent=e==1?'متكافئ المرونة':e>1?'مرن':'غير مرن';$('#lr').textContent=r;
+$('#ln').textContent='ك = '+Q+'. '+(e>1?'خفّض السعر يزيد الإيراد.':e<1?'ارفع السعر يزيد الإيراد.':'الإيراد في قمته.')}
+$('#ls').oninput=lab;lab();
+/* types */
+const sv=(d)=>`<path class="ax" d="M20 10V140H190"/><text class="t" x="4" y="14">ث</text><text class="t" x="188" y="156">ك</text>${d}`;
+const T=[['عديم المرونة','م ط ث = صفر','خط رأسي. الكمية ثابتة مهما تغير السعر. مثال: الدواء الحيوي. السعر ↑ الإيراد ↑ بنفس النسبة.',sv('<path class="cv" d="M105 20V140"/>')],
+['غير مرن','م ط ث < ١','منحنى شديد الانحدار. سعر −٢٠٪ ← كمية +١٠٪ مثلاً.',sv('<path class="cv" d="M85 15L125 140"/>')],
+['متكافئ','م ط ث = ١','قطع زائد قائم. %Δك = %Δث دائماً، والإيراد ثابت.',sv('<path class="cv" d="M30 20Q40 110 185 132"/>')],
+['مرن','م ط ث > ١','منحنى قليل الانحدار. سعر −٢٠٪ ← كمية +٣٠٪ مثلاً.',sv('<path class="cv" d="M25 55L185 105"/>')],
+['لانهائي المرونة','م ط ث = ∞','خط أفقي. أي تغير بسيط في السعر يغير الكمية بشكل لانهائي.',sv('<path class="cv" d="M20 70H185"/>')]];
+function tab(i){$$('#tt button').forEach((b,j)=>b.classList.toggle('on',i==j));$('#tsv').innerHTML=T[i][3];$('#ttx').innerHTML=`<h3>${T[i][0]}</h3><span class="chip">${T[i][1]}</span><p>${T[i][2]}</p>`}
+T.forEach((t,i)=>{const b=document.createElement('button');b.className='btn alt';b.textContent=t[0];b.onclick=()=>tab(i);$('#tt').append(b)});tab(0);
+/* determinants */
+[['أهمية السلعة','عكسية: الضرورية غير مرنة، الكمالية مرنة.'],['توافر البدائل','طردية: بدائل أكتر = طلب أكثر مرونة.'],['تكامل السلعة','عكسية: ارتباطها بسلع أخرى يخلّي طلبها غير مرن.'],['نسبة الإنفاق من الدخل','طردية: كل ما أخدت جزء أكبر من الميزانية زاد الحساسية.'],['طول الفترة الزمنية','طردية: مع الوقت الناس بتلاقي بدائل.'],['دخل المستهلك','عكسية: الدخل الكبير = طلب غير مرن.'],['ثمن السلعة','طردية: كل ما زاد السعر زادت المرونة (كما على الخط المستقيم).']]
+.forEach(([a,b])=>{const d=document.createElement('button');d.className='det';d.innerHTML=`<b>${a}</b><span>${b}</span>`;d.onclick=()=>d.classList.toggle('open');$('#dets').append(d)});
+/* revenue */
+let rs=null,rd=0;const RM=[['صفر',0],['< ١',.5],['= ١',1],['> ١',2],['∞',9]];
+RM.forEach(([n,v])=>{const b=document.createElement('button');b.className='btn alt';b.textContent='م ط ث '+n;b.onclick=()=>{rs=v;$$('#rm button').forEach(x=>x.classList.remove('on'));b.classList.add('on');rv()};$('#rm').append(b)});
+$$('[data-d]').forEach(b=>b.onclick=()=>{rd=+b.dataset.d;$$('[data-d]').forEach(x=>x.classList.remove('on'));b.classList.add('on');rv()});
+function rv(){if(rs===null||!rd)return;let r;if(rs==1)r=0;else r=(rs<1?1:-1)*rd;
+$('#rres').textContent=r==0?'الإيراد ثابت':r>0?'الإيراد ↑':'الإيراد ↓';
+$('#rwhy').textContent=rs==1?'التغير في الكمية بنفس نسبة السعر فيتعادلوا.':rs<1?'الكمية بتتحرك أقل من السعر، فالسعر هو الأقوى (علاقة طردية).':'الكمية بتتحرك أكتر من السعر، فالكمية هي الأقوى (علاقة عكسية).'}
+/* other */
+$$('[data-i]').forEach(b=>b.onclick=()=>{const v=+b.dataset.i;$('#ires').textContent=v>1?'موجبة وأكبر من ١ ← سلعة كمالية.':v>0?'موجبة وأقل من ١ ← سلعة ضرورية.':v<0?'سالبة ← سلعة رديئة (الدخل ↑ الطلب ↓).':'صفر ← السلعة عديمة المرونة الدخلية.'});
+$$('[data-c]').forEach(b=>b.onclick=()=>{const v=+b.dataset.c;$('#cres').textContent=v>0?'موجبة ← سلعتان بديلتان.':v<0?'سالبة ← سلعتان مكملتان.':'صفر ← سلعتان مستقلتان.'});
+/* supply */
+const SU=[['عديم المرونة','م ع ث = صفر','خط رأسي. الكمية ثابتة. مثال: الأرض داخل مدينة.',sv('<path class="cv" d="M105 20V140"/>')],
+['غير مرن','م ع ث < ١','يخرج من محور الكمية على يمين نقطة الأصل.',sv('<path class="cv" d="M70 140L170 25"/>')],
+['متكافئ','م ع ث = ١','خط مستقيم من نقطة الأصل بأي زاوية.',sv('<path class="cv" d="M20 140L160 20"/>')],
+['مرن','م ع ث > ١','يخرج من محور الكمية على يسار نقطة الأصل (أو من محور السعر لو رسمته من الأعلى).',sv('<path class="cv" d="M20 110L185 30"/>')],
+['لانهائي','م ع ث = ∞','خط أفقي. السعر ثابت مهما تغيرت الكمية.',sv('<path class="cv" d="M20 70H185"/>')]];
+function stab(i){$$('#st button').forEach((b,j)=>b.classList.toggle('on',i==j));$('#ssv').innerHTML=SU[i][3];$('#stx').innerHTML=`<h3>${SU[i][0]}</h3><span class="chip">${SU[i][1]}</span><p>${SU[i][2]}</p>`}
+SU.forEach((t,i)=>{const b=document.createElement('button');b.className='btn alt';b.textContent=t[0];b.onclick=()=>stab(i);$('#st').append(b)});stab(0);
+/* calc */
+$('#cb').onclick=()=>{const a1=+$('#a1').value,a2=+$('#a2').value,b1=+$('#b1').value,b2=+$('#b2').value,m=$('#cm').value;
+if(!a1||!b1||a1==a2){$('#cr').textContent='';$('#cx').textContent='لازم القيمة الأولى والكمية الأولى مش صفر، والتغير مش صفر.';return}
+const e=((b2-b1)/(a2-a1))*(a1/b1);$('#cr').textContent='م = '+f(e);let t='';
+if(m=='p')t=kind(e)+(e>0?' — إشارة موجبة: سلعة تفاخرية/جيفن.':'')+'. لو السعر زاد 1٪ الكمية تتغير '+f(Math.abs(e))+'٪.';
+if(m=='i')t=e>1?'كمالية':e>0?'ضرورية':e<0?'رديئة':'عديمة المرونة الدخلية';
+if(m=='c')t=e>0?'سلعتان بديلتان':e<0?'سلعتان مكملتان':'سلعتان مستقلتان';
+if(m=='s')t=kind(e)+' (العرض).';$('#cx').textContent=t}
+/* flashcards */
+const FC=[['متى تتحول المعرفة إلى علم؟','لو عبّرت عن الواقع، وذات منهج علمي، وقابلة للاختبار'],['منحنى الطلب سالب الميل / موجب الميل؟','سالب: السلع العادية. موجب: السلع التفاخرية وسلعة جيفن'],['متى يتمدد الطلب؟ ينكمش؟','يتمدد: عند انخفاض سعر السلعة نفسها. ينكمش: عند ارتفاعه'],['متى يظل الإيراد الكلي ثابتاً مهما تغير السعر؟','الطلب متكافئ المرونة (م = ١)'],['متى يزيد إنفاق المستهلك بنفس نسبة ارتفاع السعر؟','الطلب عديم المرونة'],['متى يزيد إيراد البترول مع زيادة سعره؟','الطلب غير المرن'],['متى يقل الإنفاق مع ارتفاع السعر؟','الطلب المرن'],['متى تنعدم تكلفة الفرصة البديلة؟','لما يكون للعنصر استخدام واحد فقط'],['عدم قدرة المجتمع على إشباع حاجاته في ظل ندرة الموارد','المشكلة الاقتصادية'],['أقصى عائد بديل تم التضحية به','تكلفة الفرصة البديلة'],['استخدام الموارد بكامل طاقتها','الاستخدام الكامل'],['استخدام الموارد أفضل استخدام ممكن','الاستخدام الأمثل'],['الدالة التي توضح العلاقة بين الكمية المطلوبة وكل محدداتها','دالة الطلب'],['جدول العلاقة بين سعر السلعة وكميتها المطلوبة','جدول الطلب'],['علاقة طردية بين السعر والكمية المعروضة مع ثبات العوامل الأخرى','قانون العرض'],['السلع التي تتنافس لإشباع نفس الرغبة / تُستخدم معاً','البديلة / المكملة'],['٣ عوامل تزيد الطلب','زيادة الدخل (عادية)، ارتفاع سعر البديل، انخفاض سعر المكمل، زيادة السكان، تغير الأذواق، توقع ارتفاع السعر'],['صور التدخل الحكومي في السوق','حد أقصى للأسعار، حد أدنى للأجور، ضريبة، إعانة']];
+FC.forEach(([q,a])=>{const b=document.createElement('button');b.className='flip';b.innerHTML=`<div><p class="q">${q}</p><p class="a">${a}</p></div>`;b.onclick=()=>b.classList.toggle('f');$('#fl').append(b)});
+/* quiz */
+const Q=[
+['لو السعر زاد ١٠٪ والكمية انخفضت ٣٠٪، م ط ث =',['−٣','−٠٫٣','+٣','−٤٠'],0,'٣٠ ÷ ١٠ = ٣ والإشارة سالبة. الطلب مرن.'],
+['م ط ث = −٥ للبرتقال تعني:',['السعر ↑١٪ الكمية ↓٥٪','السعر ↑٥٪ الكمية ↓١٪','السعر ↑١٪ الكمية ↑٥٪','الطلب عديم المرونة'],0,'تحرّك ١٪ في السعر يقابله ٥٪ عكسياً في الكمية.'],
+['على الخط المستقيم سالب الميل، لما السعر يزيد المرونة:',['تزيد','تقل','ثابتة','تنعدم'],0,'علاقة طردية بين المرونة والسعر على الخط المستقيم.'],
+['الطلب متكافئ المرونة شكله:',['قطع زائد قائم','خط رأسي','خط أفقي','خط من نقطة الأصل'],0,'م = ١ ثابتة على القطع الزائد.'],
+['الطلب عديم المرونة شكله:',['خط رأسي','خط أفقي','قطع زائد','مائل'],0,'الكمية ثابتة مهما تغير السعر.'],
+['سعر ↑ والطلب مرن (م > ١) فالإيراد:',['ينخفض','يزيد','ثابت','يزيد بنفس النسبة'],0,'الكمية تنخفض بنسبة أكبر.'],
+['سعر ↑ والطلب غير مرن فالإيراد:',['يزيد','ينخفض','ثابت','صفر'],0,'علاقة طردية بين السعر والإيراد.'],
+['أي عامل يزيد مرونة الطلب؟',['توافر بدائل قريبة','أهمية السلعة','تكامل السلعة مع غيرها','ارتفاع دخل المستهلك'],0,'البدائل طردية؛ الباقي عكسية.'],
+['أطول فترة زمنية تجعل الطلب:',['أكثر مرونة','أقل مرونة','عديم المرونة','لا تأثير'],0,'علاقة طردية.'],
+['الدخل ↑٢٠٪ والطلب ↑٨٠٪، م ط ل =',['٤ (كمالية)','٠٫٢٥','٤ (ضرورية)','−٤'],0,'٨٠÷٢٠=٤ أكبر من ١ فهي كمالية.'],
+['الدخل من ١٠٠٠ إلى ١١٠٠ والطلب على الفول من ٢٠ إلى ١٠: م ط ل =',['−٥ (رديئة)','+٥','−٠٫٢','صفر'],0,'(−١٠÷١٠٠)×(١٠٠٠÷٢٠)=−٥ والإشارة سالبة فهي رديئة.'],
+['المرونة التقاطعية للسلعتين موجبة تعني:',['بديلتان','مكملتان','مستقلتان','رديئتان'],0,'سعر (س)↑ طلب (ص)↑.'],
+['سعر البنزين ١٠←١٢ والطلب على السيارات ١٠٠٠←٦٠٠، م ط ق =',['−٢ (مكملتان)','+٢','−٠٫٥','صفر'],0,'(−٤٠٠÷٢)×(١٠÷١٠٠٠)=−٢.'],
+['سعر السلعة ٥←٦ والعرض ٢٠٠←٤٠٠، م ع ث =',['٥','٠٫٢','١','٢'],0,'(٢٠٠÷١)×(٥÷٢٠٠)=٥ فالعرض مرن.'],
+['عرض الأرض داخل مدينة:',['عديم المرونة','لانهائي','متكافئ','مرن'],0,'الكمية ثابتة.'],
+['منحنى عرض يخرج من محور الكمية يمين نقطة الأصل:',['غير مرن','مرن','متكافئ','عديم المرونة'],0,'م ع ث أقل من ١.'],
+['السلع الزراعية عرضها:',['غير مرن','مرن','لانهائي','متكافئ'],0,'السلع الصناعية هي المرنة.'],
+['زيادة قابلية التخزين تجعل العرض:',['أكثر مرونة','أقل مرونة','عديم','لا تأثير'],0,'علاقة طردية.'],
+['س٤-٦ سعر القمح ١٠٠٠←٨٠٠ والكمية ٢٠←٢٤ ألف. الطلب:',['متكافئ المرونة','مرن','غير مرن','عديم'],0,'−٢٠٪ مقابل +٢٠٪ فالمرونة = ١.'],
+['س٤-٧ الدخل ٥٠٠٠←٦٠٠٠ والطلب ٦←٩. السلعة:',['كمالية (م=٢٫٥)','ضرورية','رديئة','مستقلة'],0,'+٥٠٪ ÷ +٢٠٪ = ٢٫٥ أكبر من ١.'],
+['س٤-٨ سعر (س) ١٠٠←١٥٠ والطلب على (ص) ١٠٠٠←١١٠٠:',['بديلتان (م ط ق=٠٫٢)','كمالية','مكملتان','مستقلتان'],0,'إشارة موجبة فهما بديلتان؛ السؤال ليس عن كمالية.'],
+['زيادة الطلب والعرض معاً (بنفس القدر):',['الكمية ↑ والسعر ثابت','السعر ↑ والكمية ثابتة','السعر ↓','الكمية ↓'],0,'الكمية تزيد حتماً، والسعر يتوقف على القوة النسبية.'],
+['انخفاض أسعار خدمات عناصر الإنتاج:',['يزيد العرض: السعر ↓ والكمية ↑','يزيد السعر','ينقص الكمية','لا أثر'],0,'العرض يزيد ← سعر التوازن ↓ وكميته ↑ (عبارة السؤال ٤-٤ خطأ).']];
+let qi=0,sc=0,ans=false;
+function qr(){const b=$('#qb');if(qi>=Q.length){b.innerHTML=`<h3>خلصت! نتيجتك ${sc} من ${Q.length}</h3><p>${sc>Q.length*.8?'فنان فعلاً 🎨':'كمّل وراجع الدروس اللي فاتتك.'}</p><button class="btn" id="rs">ابدأ تاني</button>`;$('#rs').onclick=()=>{qi=0;sc=0;qr()};return}
+const [q,o,c,e]=Q[qi];const ix=o.map((t,i)=>[t,i]).sort(()=>Math.random()-.5);ans=false;
+b.innerHTML=`<div class="bar"><i style="width:${qi/Q.length*100}%"></i></div><b>سؤال ${qi+1}/${Q.length}</b><h3>${q}</h3>`+ix.map(([t,i])=>`<button class="opt" data-i="${i}">${t}</button>`).join('')+'<div class="ex" id="qe"></div>';
+$$('.opt').forEach(x=>x.onclick=()=>{if(ans)return;ans=true;const ok=+x.dataset.i==c;if(ok)sc++;x.classList.add(ok?'ok':'no');$$('.opt').forEach(y=>{if(+y.dataset.i==c)y.classList.add('ok')});$('#qe').innerHTML=(ok?'برافو! ':'قربت. ')+e+'<br><button class="btn" id="nx" style="margin-top:8px">التالي</button>';$('#nx').onclick=()=>{qi++;qr()}})}
+qr();
+</script>
+</body>
+</html>
